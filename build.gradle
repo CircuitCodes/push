@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'com.palantir.graal' version '0.6.0'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+group 'com.circuitrcay'
+version '0.0.1-pa'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'io.github.classgraph', name: 'classgraph', version: '4.8.60'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+graal {
+    outputName 'push'
+    mainClass 'com.circuitrcay.push.Push'
+    graalVersion '19.2.1'
+}
+
+shadowJar {
+    baseName =  'push'
+    classifier = 'pa'
+    archiveVersion = '0.0.1'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': "com.circuitrcay.push.Push"
+    }
+}
