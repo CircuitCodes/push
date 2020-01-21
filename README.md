@@ -6,6 +6,9 @@ native-image is currently not supported, due to class loading not being supporte
 
 To build it as a standard .jar, use the command `./gradlew shadowJar` or `gradlew shadowJar` depending on the operating system.
 
+## Support
+The two official support areas are the #push-support channel on the [Discord](https://discord.gg/ssdp3sN) and the `#push-shell` IRC channel on Freenode.
+
 ## License
 PUSH is released under the Apache 2.0 [license](https://github.com/CircuitCodes/Push/blob/master/LICENSE).
 ```
