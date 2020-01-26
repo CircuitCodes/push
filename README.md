@@ -1,3 +1,4 @@
+[![Build Status](https://ci.circuitrcay.com/job/PUSH/badge/icon?style=flat-square)](https://ci.circuitrcay.com/job/PUSH/)
 # Pretty Unmaintainable SHell (PUSH)
 PUSH is a shell, made using Java and the [Graal VM](https://www.graalvm.org), initially as a learning process.
 
