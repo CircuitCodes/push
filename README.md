@@ -7,6 +7,9 @@ native-image is currently not supported, due to class loading not being supporte
 
 To build it as a standard .jar, use the command `./gradlew shadowJar` or `gradlew shadowJar` depending on the operating system.
 
+## Installing
+Nightly builds are provided via [Jenkins](https://ci.circuitrcay.com/job/PUSH/), for x86_64. aarch64 binaries are still in development.
+
 ## Support
 The two official support areas are the #push-support channel on the [Discord](https://discord.gg/ssdp3sN) and the `#push-shell` IRC channel on Freenode.
 
