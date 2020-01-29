@@ -6,13 +6,13 @@ import com.circuitrcay.push.parser.CommandLoader;
 import java.util.Scanner;
 
 public class Push {
-    public static void main(String[] args) {
-        CommandLoader.scan();
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
+        CommandLoader.init();
         while (true) {
             System.out.print("> ");
             String command = scanner.next();
-            CommandLoader.run(command, args);
+            CommandLoader.executor(command);
         }
     }
 }

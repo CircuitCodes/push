@@ -1,8 +1,7 @@
 package com.circuitrcay.push.parser;
 
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfo;
-import io.github.classgraph.ScanResult;
+import com.circuitrcay.push.commands.Version;
+import com.circuitrcay.push.exceptions.InvalidCommandException;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,36 +9,38 @@ import java.util.List;
 import java.util.Map;
 
 public class CommandLoader {
-    public static Map<String, Command> commands = new HashMap<>();
+    public static Map<String, Command> commandMap = new HashMap<>();
 
-    public static void scan() {
-        long start = System.currentTimeMillis();
-        try(ScanResult result = new ClassGraph()
-            .whitelistPackages("com.circuitrcay.push.commands")
-            .scan()) {
-            for(ClassInfo classInfo : result.getSubclasses(Command.class.getCanonicalName())) {
-                try {
-                    Command command = (Command) classInfo.loadClass().getDeclaredConstructor().newInstance();
-                    commands.put(command.name, command);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    result.close();
-                }
-            }
-        }
-        long end = System.currentTimeMillis();
-        System.out.println("Loaded " + commands.size() + " commands in " + String.format("%s", end - start) + "ms");
+    public static void init() {
+        commandMap.put("version", new Version());
     }
 
-    public static void run(String name, String[] args) {
-        commands.forEach((n, c) -> {
-            List<String> aliases = Arrays.asList(c.aliases);
-            if (!name.equals(n) || !aliases.contains(name)) {
-                return;
-            } else {
-                c.execute(args);
+    public static void executor(String input) throws Exception {
+        String prefix = ".";
+        if(input.startsWith(prefix)) {
+            String command = input.substring(prefix.length(), input.length()).split("\\s+")[0];
+            String[] tempArgs = {};
+            if(input.contains(" ")) {
+                tempArgs = input.substring(prefix.length() + command.length() + 1, input.length()).split("\\s+");
             }
-        });
+
+            Command result = null;
+            String[] args = tempArgs;
+            for(Map.Entry<String, Command> entry: commandMap.entrySet()) {
+                if(entry.getValue().name.equals(command)) {
+                    result = entry.getValue();
+                    break;
+                }
+                if (Arrays.stream(entry.getValue().aliases).anyMatch(alias -> alias.equalsIgnoreCase(command))) {
+                    result = entry.getValue();
+                    break;
+                }
+            }
+            if(result == null) {
+                throw new InvalidCommandException("Unknown command.");
+            } else {
+                result.execute(args);
+            }
+        }
     }
 }

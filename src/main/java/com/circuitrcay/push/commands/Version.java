@@ -12,6 +12,6 @@ public class Version extends Command {
 
     @Override
     public void execute(String[] args) {
-        System.out.print(PushVersion.VERSION);
+        System.out.println(PushVersion.VERSION);
     }
 }
