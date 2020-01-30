@@ -11,7 +11,7 @@ public class Push {
         CommandLoader.init();
         while (true) {
             System.out.print("> ");
-            String command = scanner.next();
+            String command = scanner.nextLine();
             CommandLoader.executor(command);
         }
     }
