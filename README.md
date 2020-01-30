@@ -3,12 +3,24 @@
 PUSH is a shell, made using Java and the [Graal VM](https://www.graalvm.org), initially as a learning process.
 
 ## Building
-native-image is currently not supported, due to class loading not being supported in GraalVM.
 
+### Native Image
+Built files can be found in `${git-directory}/build/native-image`
+#### Linux & Darwin
+Install GCC, then run `./gradlew nativeImage`.
+
+#### Windows
+native-image on Windows is supported with Graal version 19.3.0 and above.
+
+It requires the Windows 10 SDK and using the Native Tools command prompt.
+
+Once that is installed, run `gradlew.bat nativeImage` on the project directory
+
+### Standard JAR
 To build it as a standard .jar, use the command `./gradlew shadowJar` or `gradlew shadowJar` depending on the operating system.
 
 ## Installing
-Nightly builds are provided via [Jenkins](https://ci.circuitrcay.com/job/PUSH/), for x86_64. aarch64 binaries are still in development.
+~~Nightly builds are provided via [Jenkins](https://ci.circuitrcay.com/job/PUSH/), for x86_64. aarch64 binaries are still in development.~~ That is now down, until we find an alternative to Jenkins.
 
 ## Support
 The two official support areas are the #push-support channel on the [Discord](https://discord.gg/ssdp3sN) and the `#push-shell` IRC channel on Freenode.

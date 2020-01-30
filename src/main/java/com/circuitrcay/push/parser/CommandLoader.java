@@ -5,6 +5,7 @@ import com.circuitrcay.push.commands.Directory;
 import com.circuitrcay.push.commands.Exit;
 import com.circuitrcay.push.commands.Version;
 import com.circuitrcay.push.exceptions.InvalidCommandException;
+import org.buildobjects.process.ExternalProcessFailureException;
 import org.buildobjects.process.ProcBuilder;
 import org.buildobjects.process.StartupException;
 
@@ -54,8 +55,10 @@ public class CommandLoader {
                 System.out.print(output);
             } catch (StartupException e) {
                 System.err.print("Command does not exist, or PUSH cannot find it.");
+            } catch (ExternalProcessFailureException e) {
+                System.err.print(e.getStderr());
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.print(e.getMessage());
             }
         } else {
             result.execute(args);
