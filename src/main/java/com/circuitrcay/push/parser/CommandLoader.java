@@ -4,6 +4,7 @@ import com.circuitrcay.push.commands.*;
 import com.circuitrcay.push.exceptions.InvalidCommandException;
 import org.buildobjects.process.ExternalProcessFailureException;
 import org.buildobjects.process.ProcBuilder;
+import org.buildobjects.process.ProcResult;
 import org.buildobjects.process.StartupException;
 
 import java.io.BufferedReader;
@@ -50,8 +51,9 @@ public class CommandLoader {
         }
         if(result == null) {
             try {
-                String output = ProcBuilder.run(command, args);
-                System.out.println(output);
+                ProcBuilder builder = new ProcBuilder(command).withArgs(args).withNoTimeout();
+                ProcResult procResult = builder.run();
+                System.out.println(procResult.getOutputString());
             } catch (StartupException e) {
                 System.err.println("Command does not exist, or PUSH cannot find it.");
                 return;
